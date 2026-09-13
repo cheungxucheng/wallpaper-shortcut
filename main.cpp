@@ -38,7 +38,7 @@ int main() {
     }
     else if (count == 1) {
         LPWSTR monitorId = nullptr;
-        if (FAILED(wallpaper->GetMonitorDevicePathAt(1, &monitorId))) {
+        if (FAILED(wallpaper->GetMonitorDevicePathAt(0, &monitorId))) {
             std::cerr << "Failed to create monitorid object\n";
             CoUninitialize();
             wallpaper->Release();
