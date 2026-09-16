@@ -12,6 +12,8 @@ struct MonitorInfo {
     std::wstring path;
 };
 
+std::vector<MonitorInfo> getMonitors(UINT displayCount, IDesktopWallpaper* wallpaper);
+
 INT_PTR CALLBACK DialogProc(
     HWND hwnd,
     UINT message,
@@ -117,29 +119,8 @@ int main() {
         return -1;
     }
 
-    std::vector<MonitorInfo> monitors;
-
-    // populate monitors vector with corresponding id and path
-    // that way when we create the dialog box there are options to choose from
-    for (UINT i = 0; i < count; ++i) {
-        LPWSTR monitorId = nullptr;
-        // if there are valid displays / on success
-        if (SUCCEEDED(
-                wallpaper->GetMonitorDevicePathAt(i, &monitorId))) {
-            RECT rect;
-
-            if (SUCCEEDED(
-                    wallpaper->GetMonitorRECT(monitorId, &rect))) {
-                LPWSTR path = nullptr;
-                if (SUCCEEDED(wallpaper->GetWallpaper(monitorId, &path))) {
-                    monitors.push_back({monitorId, path});
-                }  
-                CoTaskMemFree(path);
-            }
-
-        }
-        CoTaskMemFree(monitorId);
-    }
+    std::vector<MonitorInfo> monitors = getMonitors(count, wallpaper);
+    
     // if only one display, open file explorer with file selected directly
     // if more, open dialog box allowing for wallpaper selection
     if (monitors.size() == 1) {        
@@ -210,4 +191,31 @@ int main() {
     CoUninitialize();
 
     return 0;
+}
+
+// populate monitors vector with corresponding id and path
+// that way when we create the dialog box there are options to choose from
+std::vector<MonitorInfo> getMonitors(UINT displayCount, IDesktopWallpaper* wallpaper) {
+    std::vector<MonitorInfo> monitors; 
+    for (UINT i = 0; i < displayCount; ++i) {
+        LPWSTR monitorId = nullptr;
+        // if there are valid displays / on success
+        if (SUCCEEDED(
+                wallpaper->GetMonitorDevicePathAt(i, &monitorId))) {
+            RECT rect;
+
+            if (S_FALSE != (
+                    wallpaper->GetMonitorRECT(monitorId, &rect))) {
+                LPWSTR path = nullptr;
+                if (SUCCEEDED(wallpaper->GetWallpaper(monitorId, &path))) {
+                    monitors.push_back({monitorId, path});
+                }  
+                CoTaskMemFree(path);
+            }
+
+        }
+        CoTaskMemFree(monitorId);
+    }
+
+    return monitors;
 }
