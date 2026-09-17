@@ -1,3 +1,3 @@
 # Wallpaper Shortcut
 
-This program outputs the file paths for the current desktop monitors on each display.
+This program opens the file explorer with the image selected. If the user has multiple displays, a popup appears prompting the user to select a display.
