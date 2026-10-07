@@ -3,6 +3,8 @@
 A lightweight Windows utility that opens File Explorer with the currently
 displayed desktop wallpaper selected.
 
+[Click to Download](https://github.com/cheungxucheng/wallpaper-shortcut/releases/download/win32/Wallpaper.Shortcut.exe)
+
 ## Features
 - Retrieves the current Windows desktop wallpaper
 - Supports multiple monitors
@@ -35,4 +37,3 @@ then opened in File Explorer using the Windows Shell API.
 windres resource.rc -o resource.o
 g++ main.cpp resource.o -o wallpaper-shortcut.exe -static -mwindows -lole32 -luuid -lshell32
 
-[Click to Download](https://github.com/cheungxucheng/wallpaper-shortcut/releases/download/win32/Wallpaper.Shortcut.exe)
