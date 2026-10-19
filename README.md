@@ -1,7 +1,7 @@
 # Wallpaper Shortcut
 
-A lightweight Windows utility that opens File Explorer with the currently
-displayed desktop wallpaper selected.
+A lightweight Windows program that opens File Explorer with the currently
+displayed desktop wallpaper selected. Double click to run, or run in the terminal.
 
 [Click to Download](https://github.com/cheungxucheng/wallpaper-shortcut/releases/download/win32/Wallpaper.Shortcut.exe)
 
